@@ -22,7 +22,7 @@ var elementList = [ {"name": "0"},
 				 {"name": "7"},
 				 {"name": "8"} ];
 
-sortSets(setList);
+var setHierarchy = sortSets(setList);
 
 function compareSets(a, b){
 	if(a.elements.length > b.elements.length){
@@ -86,18 +86,70 @@ function sortSets(){
 	console.log(elementList);
 
 	//Construct a group for the first label in the first list
+	var hierarchy = [];
+	hierarchy.push({"set": elementList[0].sets[0], 
+		"elements": [], "children": [] });
 
 	//for each remaining label in the first list do
 	//	Construct a group such that the group corresponding to each label 
 	//	is nested inside the previous group
 	//	Add the first item as a child of the inner-most group
 	//end for
+	var temp = hierarchy[0];
+	for(var i = 1; i < elementList[0].sets.length; i++){
+		temp.children.push({"set": elementList[0].sets[i], 
+			"elements": [], "children": [] });
+		temp = temp.children[0];
+	}
+	temp.elements.push(elementList[0].name);
 
 	//for each remaining list of set labels do
 	//	Construct groups for each of the sets in the list that differ from 
 	//	those in the previously processed list (nested as before)
 	//	Add the item as a child of the inner-most group
 	//end for
+	start = 0;
+	for(var i = 1; i < elementList.length; i++){
+		//check first
+		temp = hierarchy[start];
+		if(temp.set != elementList[i].sets[0]){ //first set doesn't matches
+			start += 1;
+			hierarchy.push({"set": elementList[i].sets[0], 
+				"elements": [], "children": []});
+			temp = hierarchy[start];
+			for(var j = 1; j < elementList[i].sets.length; j++){
+				temp.children.push({"set": elementList[i].sets[j], 
+					"elements": [], "children": [] });
+				temp = temp.children[0];
+			}
+			temp.elements.push(elementList[i].name);
+		}
+		else{ //first set matches
+			console.log("match");
+			for(var j = 1; j < elementList[i].sets.length; j++){
+				//check for next match
+				var matchfound = false;
+				for(var k = 0; k < temp.children.length; k++){
+					if(temp.children[k].set == elementList[i].sets[j]){
+						console.log("help me");
+						matchfound = true;
+						temp = temp.children[k];
+						break;
+					}
+				}
+				if(!matchfound){ // if no match found, create next layer
+					temp.children.push({"set": elementList[i].sets[j],
+						"elements": [], "children": []});
+					temp = temp.children[temp.children.length-1];
+				}
+			}
+			temp.elements.push(elementList[i].name);
+		}
+		
+	}
+
+	console.log(hierarchy);
+
 
 	//Connect with an edge all groups with the same label
 }
