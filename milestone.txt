@@ -1,0 +1,9 @@
+FP milestone
+
+For this milestone, we have met or almost met each of the goals we set in our proposal. Our goals were to find the datasets we plan to use, implement the sorting/hierarchy algorithm, and start working on the ComED visualization. 
+
+We have begun gathering the data that we will use in our final implementation. So far, we have the memberships of five international organizations. We plan to add to this dataset once we have a more complete working version of the visualization. We hope to have the memberships about 10 organizations total for final version of the project. 
+
+We have completed the functions necessary to load in the data from a csv file, then sort and store that data in a hierarchy to draw the ComED visualization. We also have this part of the project working with our current organization membership dataset. 
+
+Using a smaller dataset created separately for testing purposes, we’ve also started working on the ComED visualization. We’re currently only using outlines of the sets while we figure out the layering of the sets in the visualization. 
