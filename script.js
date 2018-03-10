@@ -21,8 +21,43 @@ var elementList = [ {"name": "0"},
 				 {"name": "6"},
 				 {"name": "7"},
 				 {"name": "8"} ];
+var setHierarchy; 
 
-var setHierarchy = sortSets(setList);
+d3.text('Organizations.csv', function(error, data){
+	if(error) throw error;
+
+	var newSetList = [];
+	var newElementList = [];
+
+	data = d3.csvParseRows(data);
+
+	for(var i = 0; i < data[0].length; i++){
+		newSetList.push({"name": data[0][i], "elements": [], "id": 0});
+	}
+
+	var tempElementList = []
+	for(var i = 1; i < data.length; i++){
+		for(var j = 0; j < data[0].length; j++){
+			if(data[i][j] != ""){
+				newSetList[j].elements.push(data[i][j]);
+				tempElementList.push(data[i][j]);
+			}
+		}
+	}
+
+	tempElementList = [...new Set(tempElementList)];
+	for(var i = 0; i < tempElementList.length; i++){
+		newElementList.push({"name": tempElementList[i]});
+	}
+	console.log(newSetList);
+	console.log(newElementList);	
+
+	setHierarchy = sortSets(newSetList, newElementList);
+
+
+});
+
+//var setHierarchy = sortSets(setList, elementList);
 
 function compareSets(a, b){
 	if(a.elements.length > b.elements.length){
@@ -55,39 +90,36 @@ function compareSetLists(a, b){
 	return 1;
 }
 
-function sortSets(){
+function sortSets(setlist, elementlist){
 	//assign a unique integer label to each set such that 
 	//the labels increase as sets decrease in size
-	setList.sort(compareSets);
-	for(var i = 0; i < setList.length; i++){
-		setList[i].id = i;
+	setlist.sort(compareSets);
+	for(var i = 0; i < setlist.length; i++){
+		setlist[i].id = i;
 	}
-	console.log(setList);
 
 	//for each element do
 	//	Construct a list of labels for all sets of which the element is a member
 	//end for
-	for(var i = 0; i < elementList.length; i++){
-		elementList[i].sets = [];
-		for(var setnum = 0; setnum < setList.length; setnum++){
-			for(var j = 0; j < setList[setnum].elements.length; j++){
-				if(elementList[i].name == setList[setnum].elements[j]){
-					elementList[i].sets.push(setnum);
+	for(var i = 0; i < elementlist.length; i++){
+		elementlist[i].sets = [];
+		for(var setnum = 0; setnum < setlist.length; setnum++){
+			for(var j = 0; j < setlist[setnum].elements.length; j++){
+				if(elementlist[i].name == setlist[setnum].elements[j]){
+					elementlist[i].sets.push(setnum);
 					break;
 				}
 			}
 		}
 	}
-	console.log(elementList);
 	//Sort each list such that the labels increase monotonically
 
 	//Sort the list of lists of set labels lexically
-	elementList.sort(compareSetLists);
-	console.log(elementList);
+	elementlist.sort(compareSetLists);
 
 	//Construct a group for the first label in the first list
 	var hierarchy = [];
-	hierarchy.push({"set": elementList[0].sets[0], 
+	hierarchy.push({"set": elementlist[0].sets[0], 
 		"elements": [], "children": [] });
 
 	//for each remaining label in the first list do
@@ -96,12 +128,12 @@ function sortSets(){
 	//	Add the first item as a child of the inner-most group
 	//end for
 	var temp = hierarchy[0];
-	for(var i = 1; i < elementList[0].sets.length; i++){
-		temp.children.push({"set": elementList[0].sets[i], 
+	for(var i = 1; i < elementlist[0].sets.length; i++){
+		temp.children.push({"set": elementlist[0].sets[i], 
 			"elements": [], "children": [] });
 		temp = temp.children[0];
 	}
-	temp.elements.push(elementList[0].name);
+	temp.elements.push(elementlist[0].name);
 
 	//for each remaining list of set labels do
 	//	Construct groups for each of the sets in the list that differ from 
@@ -109,51 +141,45 @@ function sortSets(){
 	//	Add the item as a child of the inner-most group
 	//end for
 	start = 0;
-	for(var i = 1; i < elementList.length; i++){
+	for(var i = 1; i < elementlist.length; i++){
 		//check first
 		temp = hierarchy[start];
-		if(temp.set != elementList[i].sets[0]){ //first set doesn't matches
+		if(temp.set != elementlist[i].sets[0]){ //first set doesn't matches
 			start += 1;
-			hierarchy.push({"set": elementList[i].sets[0], 
+			hierarchy.push({"set": elementlist[i].sets[0], 
 				"elements": [], "children": []});
 			temp = hierarchy[start];
-			for(var j = 1; j < elementList[i].sets.length; j++){
-				temp.children.push({"set": elementList[i].sets[j], 
+			for(var j = 1; j < elementlist[i].sets.length; j++){
+				temp.children.push({"set": elementlist[i].sets[j], 
 					"elements": [], "children": [] });
 				temp = temp.children[0];
 			}
-			temp.elements.push(elementList[i].name);
+			temp.elements.push(elementlist[i].name);
 		}
 		else{ //first set matches
-			console.log("match");
-			for(var j = 1; j < elementList[i].sets.length; j++){
+			for(var j = 1; j < elementlist[i].sets.length; j++){
 				//check for next match
 				var matchfound = false;
 				for(var k = 0; k < temp.children.length; k++){
-					if(temp.children[k].set == elementList[i].sets[j]){
-						console.log("help me");
+					if(temp.children[k].set == elementlist[i].sets[j]){
 						matchfound = true;
 						temp = temp.children[k];
 						break;
 					}
 				}
 				if(!matchfound){ // if no match found, create next layer
-					temp.children.push({"set": elementList[i].sets[j],
+					temp.children.push({"set": elementlist[i].sets[j],
 						"elements": [], "children": []});
 					temp = temp.children[temp.children.length-1];
 				}
 			}
-			temp.elements.push(elementList[i].name);
+			temp.elements.push(elementlist[i].name);
 		}
 		
 	}
 
 	console.log(hierarchy);
-
+	return hierarchy;
 
 	//Connect with an edge all groups with the same label
-}
-
-function ComEDRecursive(){
-	
 }
