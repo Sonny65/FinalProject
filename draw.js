@@ -1,9 +1,6 @@
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
+function getRandomColor(number) {
+  var letters = ["green","red","orange","yellow"];
+  color = letters[number];
   return color;
 }
 
@@ -24,14 +21,16 @@ function draw(tree,x1,y1){
 		}
 		ctx.beginPath();
 		ctx.rect(x1, y1, x2-x1, y2-y1);
-		ctx.strokeStyle=getRandomColor();
+		ctx.strokeStyle=getRandomColor(tree.set);
 		ctx.stroke();
 		return [x2,y2];
 	} else {
 		x2 = x1 + 50;
 		ctx.beginPath();
 		ctx.rect(x1, y1, 50, 50);
-		console.log(ctx.strokeStyle=getRandomColor());
+		ctx.strokeStyle = getRandomColor(tree.set);
+		ctx.fillStyle = getRandomColor(tree.set);
+		ctx.fill();
 		ctx.stroke();
 		return [x2,y1 + 50];
 	}
