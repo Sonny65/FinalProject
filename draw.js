@@ -1,5 +1,5 @@
 function getRandomColor(number) {
-  var letters = ["green","red","orange","yellow"];
+  var letters = ["orange","blue","green","pink", "yellow","black"];
   color = letters[number];
   return color;
 }
@@ -23,7 +23,7 @@ function draw(tree,x1,y1){
 	var c = document.getElementById("myCanvas");
 	var ctx = c.getContext("2d");
 	ctx.lineWidth="4";
-	if(tree.hasOwnProperty("children")){
+	if(tree.children.length > 0){
 		var x2 = x1+50;
 		var y2 = y1+50;
 		for(var i = 0; i < tree.children.length; i++){
@@ -50,7 +50,7 @@ function draw(tree,x1,y1){
 	}
 }
 
-function drawComED(){
+function drawComED(hierarchy){
 	testhierarchy = [ 	{"set": 0, "elements": [4],
 							"children": [
 								{"set": 1, "elements": [5],
@@ -81,8 +81,8 @@ function drawComED(){
 					  	{"set": 3, "elements": [7]}
 					];
 
-test = {"set": 0, "elements": [4], "children": testhierarchy}
+	test = {"set": 5, "elements": [5], "children": hierarchy}
 	draw(test,50,50);
 }
 
-drawComED();
+//drawComED();

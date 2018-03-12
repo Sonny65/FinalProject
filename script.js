@@ -21,7 +21,6 @@ var elementList = [ {"name": "0"},
 				 {"name": "6"},
 				 {"name": "7"},
 				 {"name": "8"} ];
-var setHierarchy; 
 
 d3.text('Organizations.csv', function(error, data){
 	if(error) throw error;
@@ -52,12 +51,14 @@ d3.text('Organizations.csv', function(error, data){
 	console.log(newSetList);
 	console.log(newElementList);	
 
-	setHierarchy = sortSets(newSetList, newElementList);
-
-
+	var setHierarchy = sortSets(newSetList, newElementList);
+	drawComED(setHierarchy);
 });
 
-//var setHierarchy = sortSets(setList, elementList);
+
+
+var testSetHierarchy = sortSets(setList, elementList);
+console.log(testSetHierarchy); 
 
 function compareSets(a, b){
 	if(a.elements.length > b.elements.length){
