@@ -60,10 +60,10 @@ function drawComED(hierarchy){
 							"children": [
 								{"set": 1, "elements": [5],
 									"children": [
-										{"set": 2, "elements": [6]},
+										{"set": 2, "elements": [6], "children": []},
 										{"set": 2, "elements": [6],
 											"children": [
-												{"set": 3, "elements": [6]},{"set": 3, "elements": [6],"children": [
+												{"set": 3, "elements": [6], "children": []},{"set": 3, "elements": [6],"children": [
 													{"set": 4, "elements": [6], "children": []},{"set": 4, "elements": [6], "children": []}, {"set": 4, "elements": [6], "children": []}
 											]},
 												{"set": 3, "elements": [6], "children": []}
