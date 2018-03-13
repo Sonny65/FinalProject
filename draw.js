@@ -64,32 +64,33 @@ function drawComED(hierarchy){
 										{"set": 2, "elements": [6],
 											"children": [
 												{"set": 3, "elements": [6]},{"set": 3, "elements": [6],"children": [
-													{"set": 4, "elements": [6]},{"set": 4, "elements": [6]}, {"set": 4, "elements": [6]}
+													{"set": 4, "elements": [6], "children": []},{"set": 4, "elements": [6], "children": []}, {"set": 4, "elements": [6], "children": []}
 											]},
-												{"set": 3, "elements": [6]}
+												{"set": 3, "elements": [6], "children": []}
 										]}
 									]
 								},
 								{"set": 2, "elements": [2],
 									"children": [
-										{"set": 3, "elements": [1]}
+										{"set": 3, "elements": [1], "children": []}
 									]
 								}
 							]
 					  	},
 					  	{"set": 1, "elements": [8],
 					  		"children": [
-					  			{"set": 2, "elements": [3]}
+					  			{"set": 2, "elements": [3], "children": []}
 					  		]
 					  	},
-					  	{"set": 2, "elements": [0]},
-					  	{"set": 3, "elements": [7]}
+					  	{"set": 2, "elements": [0], "children": []},
+					  	{"set": 3, "elements": [7], "children": []}
 					];
 
     var dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
-    test = {"set": 0, "elements": [], "children": hierarchy};
+    test = {"set": 0, "elements": [], "children": testhierarchy};
 	design(test,50,50,dic);
     paint(dic);
+    
 }
 
 //drawComED();
