@@ -48,17 +48,21 @@ d3.text('Organizations.csv', function(error, data){
 	for(var i = 0; i < tempElementList.length; i++){
 		newElementList.push({"name": tempElementList[i]});
 	}
+	console.log("newSetList");
 	console.log(newSetList);
+	console.log("newElementList");
 	console.log(newElementList);	
 
 	var setHierarchy = sortSets(newSetList, newElementList);
+	console.log("setHierarchy");
+	console.log(setHierarchy);
 	drawComED(setHierarchy);
 });
 
 
 
-var testSetHierarchy = sortSets(setList, elementList);
-console.log(testSetHierarchy); 
+//var testSetHierarchy = sortSets(setList, elementList);
+//console.log(testSetHierarchy); 
 
 function compareSets(a, b){
 	if(a.elements.length > b.elements.length){
@@ -96,7 +100,7 @@ function sortSets(setlist, elementlist){
 	//the labels increase as sets decrease in size
 	setlist.sort(compareSets);
 	for(var i = 0; i < setlist.length; i++){
-		setlist[i].id = i;
+		setlist[i].id = i+1;
 	}
 
 	//for each element do
@@ -107,7 +111,7 @@ function sortSets(setlist, elementlist){
 		for(var setnum = 0; setnum < setlist.length; setnum++){
 			for(var j = 0; j < setlist[setnum].elements.length; j++){
 				if(elementlist[i].name == setlist[setnum].elements[j]){
-					elementlist[i].sets.push(setnum);
+					elementlist[i].sets.push(setlist[setnum].id);
 					break;
 				}
 			}

@@ -87,7 +87,7 @@ function drawComED(hierarchy){
 					];
 
     var dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
-    test = {"set": 0, "elements": [4], "children": hierarchy};
+    test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
     paint(dic);
 }
