@@ -5,23 +5,23 @@ function getRandomColor(number) {
 }
 
 function fillRoundedRect(x, y, w, h, r, color){
-  var c = document.getElementById("myCanvas");
+  	var c = document.getElementById("myCanvas");
 	var ctx = c.getContext("2d");
 	ctx.lineWidth="4";
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y);
-  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-  ctx.lineTo(x+w, y+h-r);
-  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-  ctx.lineTo(x+r, y+h);
-  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-  ctx.lineTo(x, y+r);
-  ctx.quadraticCurveTo(x, y, x+r, y);
-  ctx.strokeStyle = "black";
-  ctx.fillStyle = getRandomColor(color);
-  ctx.fill();
-  ctx.stroke();
+  	ctx.beginPath();
+  	ctx.moveTo(x+r, y);
+  	ctx.lineTo(x+w-r, y);
+  	ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  	ctx.lineTo(x+w, y+h-r);
+  	ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  	ctx.lineTo(x+r, y+h);
+  	ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  	ctx.lineTo(x, y+r);
+  	ctx.quadraticCurveTo(x, y, x+r, y);
+  	ctx.strokeStyle = "black";
+  	ctx.fillStyle = getRandomColor(color);
+  	ctx.fill();
+  	ctx.stroke();
 }
 
 function paint(dic){
@@ -34,7 +34,7 @@ function paint(dic){
 
 function design(tree,x1,y1,dic){
 	var coordinate;
-	if(tree.hasOwnProperty("children")){
+	if(tree.children.length > 0){
 		var x2 = x1+50;
 		var y2 = y1+50;
 		for(var i = 0; i < tree.children.length; i++){
@@ -55,7 +55,7 @@ function design(tree,x1,y1,dic){
 	}
 }
 
-function drawComED(){
+function drawComED(hierarchy){
 	testhierarchy = [ 	{"set": 0, "elements": [4],
 							"children": [
 								{"set": 1, "elements": [5],
@@ -87,9 +87,9 @@ function drawComED(){
 					];
 
     var dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
-    test = {"set": 0, "elements": [4], "children": testhierarchy}
-	  design(test,50,50,dic);
+    test = {"set": 0, "elements": [4], "children": testhierarchy};
+	design(test,50,50,dic);
     paint(dic);
 }
 
-drawComED();
+//drawComED();
