@@ -56,7 +56,7 @@ d3.text('Organizations.csv', function(error, data){
 	var setHierarchy = sortSets(newSetList, newElementList);
 	console.log("setHierarchy");
 	console.log(setHierarchy);
-	drawComED(setHierarchy);
+	//drawComED(setHierarchy);
 });
 
 
