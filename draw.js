@@ -1,10 +1,55 @@
+var svgContainer = d3.select("body").append("svg")
+									.attr("width", 4000)
+									.attr("height", 1080);
+
+
+// Lasso functions
+var lasso_start = function() {
+	lasso.items()
+		//.attr("r",3.5) // reset size
+		.classed("not_possible",true)
+		.classed("selected",false);
+};
+
+var lasso_draw = function() {
+	// Style the possible dots
+	lasso.possibleItems()
+		.classed("not_possible",false)
+		.classed("possible",true);
+
+	// Style the not possible dot
+	lasso.notPossibleItems()
+		.classed("not_possible",true)
+	    .classed("possible",false);
+};
+
+var lasso_end = function() {
+    // Reset the color of all dots
+    lasso.items()
+        .classed("not_possible",false)
+        .classed("possible",false);
+
+    // Style the selected dots
+    lasso.selectedItems()
+        .classed("selected",true)
+        .attr("fill", "blue");
+        //.attr("r",7);
+
+    // Reset the style of the not selected dots
+    lasso.notSelectedItems()
+        .attr("fill", "white");
+        //.attr("r",3.5);
+
+};
+
+	
 function getRandomColor(number) {
   var letters = ["green","red","orange","yellow","pink","grey"];
   color = letters[number];
   return color;
 }
 
-function fillRoundedRect(x, y, w, h, r, color){
+/*function fillRoundedRect(x, y, w, h, r, color){
   	var c = document.getElementById("myCanvas");
 	var ctx = c.getContext("2d");
 	ctx.lineWidth="4";
@@ -56,12 +101,9 @@ function rightRoundedRect(x, y, width, height, radius) {
 	   + "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius
 	   + "h" + (radius - width)
 	   + "z";
-}
+}*/
 
 function paint(dic){
-	var svgContainer = d3.select("body").append("svg")
-										.attr("width", 4400)
-										.attr("height", 1080);
   for (var key in dic){
 	for (var set in dic[key]){
 		if(dic[key][set].length == 4){
@@ -77,6 +119,7 @@ function paint(dic){
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			svgContainer.append("rect")
+				.attr("class", "element")
 				.attr("x", dic[key][set][0])
 				.attr("y", dic[key][set][1])
 				.attr("width", dic[key][set][2])
@@ -94,6 +137,19 @@ function paint(dic){
 		}
 	}
   }
+
+  selectables = svgContainer.selectAll(".element");
+	lasso = d3.lasso()
+            .closePathSelect(true)
+            .closePathDistance(100)
+            .items(selectables)
+            .targetArea(svgContainer)
+            .on("start",lasso_start)
+            .on("draw",lasso_draw)
+            .on("end",lasso_end);
+        
+	svgContainer.call(lasso);
+
 }
 
 function design(tree,x1,y1,dic){
@@ -170,6 +226,7 @@ function drawComED(hierarchy){
 	var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
 	paint(dic);
+
 	
 }
 
