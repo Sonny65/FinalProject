@@ -4,9 +4,44 @@
  	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   	<title>Untangling Euler Diagrams</title>
   	<script type="text/javascript" src="d3/d3.min.js"></script>
+    <script type="text/javascript" src="./d3-lasso.min.js"></script>
   </head>
   <style>
+        circle {
+            fill-opacity: 0.5;
+        }
 
+        .lasso path {
+            stroke: rgb(80,80,80);
+            stroke-width:2px;
+            stroke-dasharray: 3,3;
+        }
+
+        .lasso .drawn {
+            fill-opacity:.05 ;
+        }
+
+        .lasso .loop_close {
+            fill:none;
+            stroke-dasharray: 4,4;
+        }
+
+        .lasso .origin {
+            fill:#3399FF;
+            fill-opacity:.5;
+        }
+
+        .not_possible {
+            fill: rgb(200,200,200);
+        }
+
+        .possible {
+            fill: #EC888C;
+        }
+
+        .selected {
+            fill: steelblue;
+        }
   </style>
   <body>
   	<script type="text/javascript" src="script.js"></script>

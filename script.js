@@ -1,4 +1,4 @@
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
+/*var margin = {top: 20, right: 20, bottom: 30, left: 50},
 	width = 1000 - margin.left - margin.right,
 	height = 1000 - margin.top - margin.bottom;
 var svg = d3.select("body")
@@ -7,7 +7,7 @@ var svg = d3.select("body")
 		.attr("height", height + margin.top + margin.bottom)
 	.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+*/
 var setList = [ {"name": "blue", "elements": ["3","5","6","8"], "id": 0},
 			 {"name": "orange", "elements": ["1","2","4","5","6"], "id": 0},
 			 {"name": "green", "elements": ["0","1","2","3"], "id": 0},
@@ -56,7 +56,7 @@ d3.text('Organizations.csv', function(error, data){
 	var setHierarchy = sortSets(newSetList, newElementList);
 	console.log("setHierarchy");
 	console.log(setHierarchy);
-	//drawComED(setHierarchy);
+	drawComED(setHierarchy);
 });
 
 

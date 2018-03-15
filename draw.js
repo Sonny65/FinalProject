@@ -133,7 +133,24 @@ function drawComED(hierarchy){
     var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
     paint(dic);
-    
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+
+    var lasso = d3.lasso()
+            .closePathSelect(true)
+            .closePathDistance(100)
+            .items(circles)
+            .targetArea(svg)
+            .on("start",lasso_start)
+            .on("draw",lasso_draw)
+            .on("end",lasso_end);
+
+	ctx.call(lasso);
+
 }
+
+
+        
 
 //drawComED();
