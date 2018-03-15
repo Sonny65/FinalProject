@@ -43,8 +43,9 @@ function fillRoundedRectEle(x, y, w, h, r, color,name){
   	ctx.fill();
   	ctx.stroke();
   	ctx.fillStyle = "black";
-  	ctx.font = "15px Comic Sans MS";
-  	ctx.fillText(name,x+4,y+25);
+  	ctx.font = "15px arial";
+  	ctx.textAlign = "center";
+  	ctx.fillText(name,x+w/2,y+2*h/3);
 }
 
 function paint(dic){
@@ -70,7 +71,7 @@ function design(tree,x1,y1,dic){
 	var elementy = y1+10;
 	for (var i = 0; i < tree.elements.length; i++){
 		xlength = tree.elements[i].length*8;
-		dic[6].push([elementx, elementy, xlength+10, 50, tree.elements[i]]);
+		dic[6].push([elementx, elementy, xlength+10, 30, tree.elements[i]]);
 		elementx = elementx + xlength + 20;
 		if (x2 < elementx){
 			x2 = elementx;
