@@ -51,6 +51,17 @@ var lasso_end = function() {
         .attr("r",3.5);
 
 };
+
+var lasso = d3.lasso()
+            .closePathSelect(true)
+            .closePathDistance(100)
+            .items(circles)
+            .targetArea(svg)
+            .on("start",lasso_start)
+            .on("draw",lasso_draw)
+            .on("end",lasso_end);
+        
+svg.call(lasso);
         
 
 
