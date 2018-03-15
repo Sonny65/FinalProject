@@ -1,5 +1,5 @@
 function getRandomColor(number) {
-  var letters = ["green","red","orange","yellow","pink","white"];
+  var letters = ["green","red","orange","yellow","pink","grey"];
   color = letters[number];
   return color;
 }
@@ -39,12 +39,12 @@ function fillRoundedRectEle(x, y, w, h, r, color,name){
   	ctx.lineTo(x, y+r);
   	ctx.quadraticCurveTo(x, y, x+r, y);
   	ctx.strokeStyle = "black";
-  	ctx.fillStyle = getRandomColor(color);
+  	ctx.fillStyle = "white";
   	ctx.fill();
   	ctx.stroke();
   	ctx.fillStyle = "black";
-  	ctx.font = "30px Comic Sans MS";
-  	ctx.fillText(name,x+18,y+35);
+  	ctx.font = "15px Comic Sans MS";
+  	ctx.fillText(name,x+4,y+25);
 }
 
 function paint(dic){
@@ -62,10 +62,30 @@ function paint(dic){
 function design(tree,x1,y1,dic){
 	var coordinate;
 	var x2 = x1+10;
-	var y2 = y1+70;
+	var y2 = y1+10;
+	// to arrange elements in rows
+	var xcount = 0;
+	var xleft = x2
+	var elementx = x2;
+	var elementy = y1+10;
 	for (var i = 0; i < tree.elements.length; i++){
-		dic[5].push([x2, y1+10, 50, 50, tree.elements[i]]);
-		x2 = x2 + 60;
+		xlength = tree.elements[i].length*8;
+		dic[6].push([elementx, elementy, xlength+10, 50, tree.elements[i]]);
+		elementx = elementx + xlength + 20;
+		if (x2 < elementx){
+			x2 = elementx;
+		}
+		xcount++;
+		if (xcount == 4){
+			xcount = 0;
+			elementx = xleft;
+			elementy += 60;
+			y2 = elementy;
+		}
+	}
+	
+	if ( xcount != 0 ){
+		y2 += 60;
 	}
 	for(var i = 0; i < tree.children.length; i++){
 		coordinate = design(tree.children[i],x2,y1+10,dic);
@@ -75,8 +95,6 @@ function design(tree,x1,y1,dic){
 		}
 	}
 	dic[tree.set].push([x1, y1, x2-x1, y2-y1]);
-	console.log(y2-y1);
-	// fillRoundedRect(x1, y1, x2-x1, y2-y1, 25, tree.set);
 	return [x2,y2];
 }
 
@@ -112,7 +130,7 @@ function drawComED(hierarchy){
 					];
 
     var dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
-    test = {"set": 0, "elements": [], "children": testhierarchy};
+    var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
     paint(dic);
     
