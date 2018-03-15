@@ -7,10 +7,6 @@
     <script type="text/javascript" src="./d3-lasso.min.js"></script>
   </head>
   <style>
-        circle {
-            fill-opacity: 0.5;
-        }
-
         .lasso path {
             stroke: rgb(80,80,80);
             stroke-width:2px;
@@ -18,29 +14,30 @@
         }
 
         .lasso .drawn {
-            fill-opacity:.05 ;
+            fill-opacity:.01 ;
         }
 
         .lasso .loop_close {
             fill:none;
-            stroke-dasharray: 4,4;
+            stroke-width: 0px;
         }
 
         .lasso .origin {
-            fill:#3399FF;
-            fill-opacity:.5;
+            fill: none;
+            fill-opacity:.1;
+            border-radius: 1px;
         }
 
         .not_possible {
-            fill: rgb(200,200,200);
+            fill: white;
         }
 
         .possible {
-            fill: #EC888C;
+            fill: gray;
         }
 
         .selected {
-            fill: steelblue;
+            fill: gray;
         }
   </style>
   <body>

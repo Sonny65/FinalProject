@@ -22,6 +22,7 @@ var elementList = [ {"name": "0"},
 				 {"name": "7"},
 				 {"name": "8"} ];
 
+//Load in dataset
 d3.text('Organizations.csv', function(error, data){
 	if(error) throw error;
 
@@ -53,13 +54,18 @@ d3.text('Organizations.csv', function(error, data){
 	console.log("newElementList");
 	console.log(newElementList);	
 
-	var setHierarchy = sortSets(newSetList, newElementList);
+	var setHierarchy = sortSetsCom(newSetList, newElementList);
 	console.log("setHierarchy");
 	console.log(setHierarchy);
 	drawComED(setHierarchy);
+	var dupArrays = sortSetsDup(newSetList, newElementList);
+	//console.log(dupArrays);
+	drawDupED(dupArrays[0], dupArrays[1]);
 });
 
+function createNewSet(){
 
+}
 
 //var testSetHierarchy = sortSets(setList, elementList);
 //console.log(testSetHierarchy); 
@@ -95,7 +101,7 @@ function compareSetLists(a, b){
 	return 1;
 }
 
-function sortSets(setlist, elementlist){
+function sortSetsCom(setlist, elementlist){
 	//assign a unique integer label to each set such that 
 	//the labels increase as sets decrease in size
 	setlist.sort(compareSets);
@@ -187,4 +193,28 @@ function sortSets(setlist, elementlist){
 	return hierarchy;
 
 	//Connect with an edge all groups with the same label
+}
+
+function sortSetsDup(setlist, elementlist){
+	setlist.sort(compareSets);
+	for(var i = 0; i < setlist.length; i++){
+		setlist[i].id = i+1;
+	}
+
+	//for each element do
+	//	Construct a list of labels for all sets of which the element is a member
+	//end for
+	for(var i = 0; i < elementlist.length; i++){
+		elementlist[i].sets = [];
+		for(var setnum = 0; setnum < setlist.length; setnum++){
+			for(var j = 0; j < setlist[setnum].elements.length; j++){
+				if(elementlist[i].name == setlist[setnum].elements[j]){
+					elementlist[i].sets.push(setlist[setnum].id);
+					break;
+				}
+			}
+		}
+	}
+
+	return [setlist, elementlist];
 }

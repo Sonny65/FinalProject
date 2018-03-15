@@ -31,9 +31,10 @@ var lasso_end = function() {
 
     // Style the selected dots
     lasso.selectedItems()
-        .classed("selected",true)
-        .attr("fill", "blue");
+        .classed("selected",true);
         //.attr("r",7);
+
+    console.log(lasso.selectedItems()._groups[0]);
 
     // Reset the style of the not selected dots
     lasso.notSelectedItems()
@@ -124,6 +125,8 @@ function paint(dic){
 				.attr("y", dic[key][set][1])
 				.attr("width", dic[key][set][2])
 				.attr("height", dic[key][set][3])
+				.attr("key", key)
+				.attr("set", set)
 				.attr("fill", "white")
 				.style("stroke", "black")
 				.style("stroke-width", 4);
@@ -222,7 +225,7 @@ function drawComED(hierarchy){
 					  	{"set": 3, "elements": [7], "children": []}
 					];
 
-	var dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
+	dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
 	var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
 	paint(dic);
@@ -230,7 +233,9 @@ function drawComED(hierarchy){
 	
 }
 
-
+function drawDupED(setlist, elementlist){
+	
+}
         
 
 //drawComED();
