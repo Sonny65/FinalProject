@@ -43,19 +43,56 @@ function fillRoundedRectEle(x, y, w, h, r, color,name){
   	ctx.fill();
   	ctx.stroke();
   	ctx.fillStyle = "black";
-  	ctx.font = "15px Comic Sans MS";
-  	ctx.fillText(name,x+4,y+25);
+  	ctx.font = "15px arial";
+  	ctx.textAlign = "center";
+  	ctx.fillText(name,x+w/2,y+2*h/3);
+}
+
+function rightRoundedRect(x, y, width, height, radius) {
+  return "M" + x + "," + y
+	   + "h" + (width - radius)
+	   + "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius
+	   + "v" + (height - 2 * radius)
+	   + "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius
+	   + "h" + (radius - width)
+	   + "z";
 }
 
 function paint(dic){
+	var svgContainer = d3.select("body").append("svg")
+										.attr("width", 4400)
+										.attr("height", 1080);
   for (var key in dic){
-    for (var set in dic[key]){
-    	if(dic[key][set].length == 4){
-    		fillRoundedRect(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key);
-    	} else {
-    		fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4])
-    	}
-    }
+	for (var set in dic[key]){
+		if(dic[key][set].length == 4){
+			// fillRoundedRect(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key);
+			svgContainer.append("rect")
+				.attr("x", dic[key][set][0])
+				.attr("y", dic[key][set][1])
+				.attr("width", dic[key][set][2])
+				.attr("height", dic[key][set][3])
+				.attr("fill", getRandomColor(key))
+				.style("stroke", "black")
+				.style("stroke-width", 4);
+		} else {
+			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
+			svgContainer.append("rect")
+				.attr("x", dic[key][set][0])
+				.attr("y", dic[key][set][1])
+				.attr("width", dic[key][set][2])
+				.attr("height", dic[key][set][3])
+				.attr("fill", "white")
+				.style("stroke", "black")
+				.style("stroke-width", 4);
+
+			svgContainer.append("text")
+				.attr("x", dic[key][set][0]+4)
+				.attr("y", dic[key][set][1]+18)
+				.attr("font-family", "Verdana")
+				.style('font-size', '13.5px')
+				.text(dic[key][set][4]);
+		}
+	}
   }
 }
 
@@ -70,7 +107,7 @@ function design(tree,x1,y1,dic){
 	var elementy = y1+10;
 	for (var i = 0; i < tree.elements.length; i++){
 		xlength = tree.elements[i].length*8;
-		dic[6].push([elementx, elementy, xlength+10, 50, tree.elements[i]]);
+		dic[6].push([elementx, elementy, xlength+10, 30, tree.elements[i]]);
 		elementx = elementx + xlength + 20;
 		if (x2 < elementx){
 			x2 = elementx;
@@ -129,25 +166,11 @@ function drawComED(hierarchy){
 					  	{"set": 3, "elements": [7], "children": []}
 					];
 
-    var dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
-    var test = {"set": 0, "elements": [], "children": hierarchy};
+	var dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
+	var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
-    paint(dic);
-
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-
-    var lasso = d3.lasso()
-            .closePathSelect(true)
-            .closePathDistance(100)
-            .items(circles)
-            .targetArea(svg)
-            .on("start",lasso_start)
-            .on("draw",lasso_draw)
-            .on("end",lasso_end);
-
-	ctx.call(lasso);
-
+	paint(dic);
+	
 }
 
 
