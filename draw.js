@@ -48,10 +48,10 @@ var lasso_end = function() {
     		newSet.push(dic[ selectedElements[i].attributes.key.value ][ selectedElements[i].attributes.set.value ][4]);
     	}
     	createNewSet(newSet);
-    }  
+    }
 };
 
-	
+
 function getRandomColor(number) {
   var letters = ["green","red","orange","yellow","pink","grey","purple", "blue"];
   color = letters[number];
@@ -157,6 +157,7 @@ function paint(dic){
 				.style("font-size", "13.5px")
 				.style("text-anchor", "middle")
 				.text(dic[key][set][4]);
+
 		}
 	}
   }
@@ -170,7 +171,7 @@ function paint(dic){
             .on("start",lasso_start)
             .on("draw",lasso_draw)
             .on("end",lasso_end);
-        
+
 	svgContainer.call(lasso);
 
 }
@@ -186,7 +187,7 @@ function design(tree,x1,y1,dic){
 	var elementy = y1+10;
 	for (var i = 0; i < tree.elements.length; i++){
 		xlength = tree.elements[i].length*8;
-		dic[6].push([elementx, elementy, xlength+10, 30, tree.elements[i]]);
+		dic[dic.length-1].push([elementx, elementy, xlength+10, 30, tree.elements[i]]);
 		elementx = elementx + xlength + 20;
 		if (x2 < elementx){
 			x2 = elementx;
@@ -199,7 +200,7 @@ function design(tree,x1,y1,dic){
 			y2 = elementy;
 		}
 	}
-	
+
 	if ( xcount != 0 ){
 		y2 += 60;
 	}
@@ -256,12 +257,12 @@ function drawComED(hierarchy, numsets){
 	design(test,50,50,dic);
 	paint(dic);
 
-	
+
 }
 
 function drawDupED(setlist, elementlist){
-	
+
 }
-        
+
 
 //drawComED();
