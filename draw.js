@@ -112,6 +112,8 @@ function paint(dic){
 			svgContainer.append("rect")
 				.attr("x", dic[key][set][0])
 				.attr("y", dic[key][set][1])
+				.attr("rx", 6)
+				.attr("ry", 6)
 				.attr("width", dic[key][set][2])
 				.attr("height", dic[key][set][3])
 				.attr("fill", getRandomColor(key))
@@ -121,21 +123,25 @@ function paint(dic){
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			svgContainer.append("rect")
 				.attr("class", "element")
-				.attr("x", dic[key][set][0])
-				.attr("y", dic[key][set][1])
-				.attr("width", dic[key][set][2])
-				.attr("height", dic[key][set][3])
 				.attr("key", key)
 				.attr("set", set)
+				.attr("x", dic[key][set][0])
+				.attr("y", dic[key][set][1])
+				.attr("rx", 6)
+				.attr("ry", 6)
+				.attr("width", dic[key][set][2])
+				.attr("height", dic[key][set][3])
 				.attr("fill", "white")
 				.style("stroke", "black")
 				.style("stroke-width", 4);
 
 			svgContainer.append("text")
-				.attr("x", dic[key][set][0]+4)
-				.attr("y", dic[key][set][1]+18)
+				.attr("x", dic[key][set][0]+dic[key][set][2]/2)
+				.attr("y", dic[key][set][1]+dic[key][set][3]/2)
+				.attr("dy", ".3em")
 				.attr("font-family", "Verdana")
-				.style('font-size', '13.5px')
+				.style("font-size", "13.5px")
+				.style("text-anchor", "middle")
 				.text(dic[key][set][4]);
 		}
 	}
