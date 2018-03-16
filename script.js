@@ -26,8 +26,8 @@ var elementList = [ {"name": "0"},
 d3.text('Organizations.csv', function(error, data){
 	if(error) throw error;
 
-	var newSetList = [];
-	var newElementList = [];
+	newSetList = [];
+	newElementList = [];
 
 	data = d3.csvParseRows(data);
 
@@ -57,14 +57,20 @@ d3.text('Organizations.csv', function(error, data){
 	var setHierarchy = sortSetsCom(newSetList, newElementList);
 	console.log("setHierarchy");
 	console.log(setHierarchy);
-	drawComED(setHierarchy);
+	drawComED(setHierarchy, newSetList.length);
 	var dupArrays = sortSetsDup(newSetList, newElementList);
 	//console.log(dupArrays);
 	drawDupED(dupArrays[0], dupArrays[1]);
 });
 
-function createNewSet(){
+function createNewSet(set){
+	console.log(set);
+	console.log(newSetList);
+	console.log(newElementList);
+	newSetList.push({"name":"", "elements": set, id: 0});
 
+	var setHierarchy = sortSetsCom(newSetList, newElementList);
+	drawComED(setHierarchy, newSetList.length);
 }
 
 //var testSetHierarchy = sortSets(setList, elementList);

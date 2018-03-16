@@ -24,28 +24,36 @@ var lasso_draw = function() {
 };
 
 var lasso_end = function() {
-    // Reset the color of all dots
+    // Reclass all items
     lasso.items()
         .classed("not_possible",false)
         .classed("possible",false);
 
-    // Style the selected dots
+    // Style the selected elements
     lasso.selectedItems()
         .classed("selected",true);
         //.attr("r",7);
-
-    console.log(lasso.selectedItems()._groups[0]);
 
     // Reset the style of the not selected dots
     lasso.notSelectedItems()
         .attr("fill", "white");
         //.attr("r",3.5);
 
+    // Pull selected elements to create new set
+
+    var newSet = [];
+    var selectedElements = lasso.selectedItems()._groups[0]
+    if(lasso.selectedItems()._groups[0].length > 0){
+    	for(var i = 0; i < selectedElements.length; i++){
+    		newSet.push(dic[ selectedElements[i].attributes.key.value ][ selectedElements[i].attributes.set.value ][4]);
+    	}
+    	createNewSet(newSet);
+    }  
 };
 
 	
 function getRandomColor(number) {
-  var letters = ["green","red","orange","yellow","pink","grey"];
+  var letters = ["green","red","orange","yellow","pink","grey","purple"];
   color = letters[number];
   return color;
 }
@@ -194,7 +202,7 @@ function design(tree,x1,y1,dic){
 	return [x2,y2];
 }
 
-function drawComED(hierarchy){
+function drawComED(hierarchy, numsets){
 	testhierarchy = [ 	{"set": 0, "elements": [4],
 							"children": [
 								{"set": 1, "elements": [5,12,4,5],
@@ -225,6 +233,8 @@ function drawComED(hierarchy){
 					  	{"set": 3, "elements": [7], "children": []}
 					];
 
+	console.log("hierarchy");
+	console.log(hierarchy);
 	dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
 	var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
