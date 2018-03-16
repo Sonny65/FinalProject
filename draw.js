@@ -113,11 +113,16 @@ function rightRoundedRect(x, y, width, height, radius) {
 }*/
 
 function paint(dic){
+	svgContainer.selectAll(".set").remove();
+	svgContainer.selectAll(".element").remove();
+	svgContainer.selectAll(".label").remove();
+
   for (var key in dic){
 	for (var set in dic[key]){
 		if(dic[key][set].length == 4){
 			// fillRoundedRect(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key);
 			svgContainer.append("rect")
+				.attr("class", "set")
 				.attr("x", dic[key][set][0])
 				.attr("y", dic[key][set][1])
 				.attr("rx", 6)
@@ -144,6 +149,7 @@ function paint(dic){
 				.style("stroke-width", 4);
 
 			svgContainer.append("text")
+				.attr("class", "label")
 				.attr("x", dic[key][set][0]+dic[key][set][2]/2)
 				.attr("y", dic[key][set][1]+dic[key][set][3]/2)
 				.attr("dy", ".3em")
