@@ -53,7 +53,7 @@ var lasso_end = function() {
 
 	
 function getRandomColor(number) {
-  var letters = ["green","red","orange","yellow","pink","grey","purple"];
+  var letters = ["green","red","orange","yellow","pink","grey","purple", "blue"];
   color = letters[number];
   return color;
 }
@@ -247,7 +247,11 @@ function drawComED(hierarchy, numsets){
 
 	console.log("hierarchy");
 	console.log(hierarchy);
-	dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
+	//dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
+	dic = [];
+	for(var i = 0; i < numsets+2; i++){
+		dic.push(new Array());
+	}
 	var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
 	paint(dic);
