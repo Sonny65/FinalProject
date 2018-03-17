@@ -141,7 +141,7 @@ function rightRoundedRect(x, y, width, height, radius) {
 function paint(dic){
 	svgContainer.selectAll(".set").remove();
 	svgContainer.selectAll(".element").remove();
-	//svgContainer.selectAll(".label").remove();
+	svgContainer.selectAll(".link").remove();
 
   for (var key in dic){
 	for (var set in dic[key]){
