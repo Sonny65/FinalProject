@@ -53,8 +53,8 @@ var lasso_end = function() {
 
 
 function getRandomColor(number) {
-  var letters = ["white","green","red","orange","yellow","pink","grey","purple", "blue", 
-  				"salmon", "yellowgreen", "maroon", "turquoise", "gold", "mediumvioletred", 
+  var letters = ["white","green","red","orange","yellow","pink","grey","purple", "blue",
+  				"salmon", "yellowgreen", "maroon", "turquoise", "gold", "mediumvioletred",
   				"peachpuff", "thistle"];
   color = letters[number];
   return color;
@@ -120,48 +120,133 @@ function paint(dic){
 	svgContainer.selectAll(".label").remove();
 
   for (var key in dic){
-	for (var set in dic[key]){
-		if(dic[key][set].length == 4){
-			// fillRoundedRect(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key);
-			svgContainer.append("rect")
-				.attr("class", "set")
-				.attr("x", dic[key][set][0])
-				.attr("y", dic[key][set][1])
-				.attr("rx", 6)
-				.attr("ry", 6)
-				.attr("width", dic[key][set][2])
-				.attr("height", dic[key][set][3])
-				.attr("fill", getRandomColor(key))
-				.style("stroke", "black")
-				.style("stroke-width", 3);
-		} else {
-			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
-			svgContainer.append("rect")
-				.attr("class", "element")
-				.attr("key", key)
-				.attr("set", set)
-				.attr("x", dic[key][set][0])
-				.attr("y", dic[key][set][1])
-				.attr("rx", 6)
-				.attr("ry", 6)
-				.attr("width", dic[key][set][2])
-				.attr("height", dic[key][set][3])
-				.attr("fill", "white")
-				.style("stroke", "black")
-				.style("stroke-width", 3);
+		for (var set in dic[key]){
+			if(dic[key][set].length == 4){
+				// fillRoundedRect(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key);
+				svgContainer.append("rect")
+					.attr("class", "set")
+					.attr("x", dic[key][set][0])
+					.attr("y", dic[key][set][1])
+					.attr("rx", 6)
+					.attr("ry", 6)
+					.attr("width", dic[key][set][2])
+					.attr("height", dic[key][set][3])
+					.attr("fill", getRandomColor(key))
+					.style("stroke", "black")
+					.style("stroke-width", 3);
+			} else {
+				// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
+				svgContainer.append("rect")
+					.attr("class", "element")
+					.attr("key", key)
+					.attr("set", set)
+					.attr("x", dic[key][set][0])
+					.attr("y", dic[key][set][1])
+					.attr("rx", 6)
+					.attr("ry", 6)
+					.attr("width", dic[key][set][2])
+					.attr("height", dic[key][set][3])
+					.attr("fill", "white")
+					.style("stroke", "black")
+					.style("stroke-width", 3);
 
-			svgContainer.append("text")
-				.attr("class", "label")
-				.attr("x", dic[key][set][0]+dic[key][set][2]/2)
-				.attr("y", dic[key][set][1]+dic[key][set][3]/2)
-				.attr("dy", ".3em")
-				.attr("font-family", "Verdana")
-				.style("font-size", "13.5px")
-				.style("text-anchor", "middle")
-				.text(dic[key][set][4]);
+				svgContainer.append("text")
+					.attr("class", "label")
+					.attr("x", dic[key][set][0]+dic[key][set][2]/2)
+					.attr("y", dic[key][set][1]+dic[key][set][3]/2)
+					.attr("dy", ".3em")
+					.attr("font-family", "Verdana")
+					.style("font-size", "13.5px")
+					.style("text-anchor", "middle")
+					.text(dic[key][set][4]);
 
+			}
 		}
-	}
+		if (key != dic.length-1){
+			if (key % 2 == 0){
+				var height = 10000;
+				for (var set in dic[key]){
+					if ((dic[key][set][1]-key*14) < height){
+						height = dic[key][set][1]-key*14;
+					}
+				}
+				// draw link
+				for (var set in dic[key]){
+					if (dic[key].length > 1){
+						svgContainer.append("rect")
+							.attr("class", "link")
+							.attr("x", dic[key][set][0]+dic[key][set][2]/2-5)
+							.attr("y", height)
+							.attr("rx", 3)
+							.attr("ry", 3)
+							.attr("width", 10)
+							.attr("height", dic[key][set][1]-height)
+							.style("fill-opacity", "0.6")
+							.attr("fill", getRandomColor(key))
+							.style("stroke", "black")
+							.style("stroke-width", 1);
+					}
+				}
+				for (var set in dic[key]){
+					var nextset = parseInt(set)+1;
+					if (nextset < dic[key].length && dic[key].length>1){
+						svgContainer.append("rect")
+							.attr("class", "link")
+							.attr("x", dic[key][set][0]+dic[key][set][2]/2-5)
+							.attr("y",height-5)
+							.attr("rx", 3)
+							.attr("ry", 3)
+							.attr("width", dic[key][""+nextset][0]+dic[key][""+nextset][2]/2-dic[key][set][0]-dic[key][set][2]/2+10)
+							.attr("height", 10)
+							.style("fill-opacity", "0.6")
+							.attr("fill", getRandomColor(key))
+							.style("stroke", "black")
+							.style("stroke-width", 1);
+					}
+				}
+			} else {
+				var height = 0;
+				for (var set in dic[key]){
+					if ((dic[key][set][1]+dic[key][set][3]+key*14) > height){
+						height = dic[key][set][1]+dic[key][set][3]+key*14;
+					}
+				}
+				// draw link
+				for (var set in dic[key]){
+					if (dic[key].length > 1){
+						svgContainer.append("rect")
+							.attr("class", "link")
+							.attr("x", dic[key][set][0]+dic[key][set][2]/2-5)
+							.attr("y", dic[key][set][1]+dic[key][set][3])
+							.attr("rx", 3)
+							.attr("ry", 3)
+							.attr("width", 10)
+							.attr("height", height-dic[key][set][1]-dic[key][set][3])
+							.style("fill-opacity", "0.6")
+							.attr("fill", getRandomColor(key))
+							.style("stroke", "black")
+							.style("stroke-width", 1);
+					}
+				}
+				for (var set in dic[key]){
+					var nextset = parseInt(set)+1;
+					if (nextset < dic[key].length && dic[key].length>1){
+						svgContainer.append("rect")
+							.attr("class", "link")
+							.attr("x", dic[key][set][0]+dic[key][set][2]/2-5)
+							.attr("y",height-5)
+							.attr("rx", 3)
+							.attr("ry", 3)
+							.attr("width", dic[key][""+nextset][0]+dic[key][""+nextset][2]/2-dic[key][set][0]-dic[key][set][2]/2+10)
+							.attr("height", 10)
+							.style("fill-opacity", "0.6")
+							.attr("fill", getRandomColor(key))
+							.style("stroke", "black")
+							.style("stroke-width", 1);
+					}
+				}
+			}
+		}
   }
 
   selectables = svgContainer.selectAll(".element");
