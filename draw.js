@@ -35,22 +35,46 @@ var lasso_end = function() {
         //.attr("r",7);
 
     // Reset the style of the not selected dots
-    lasso.notSelectedItems()
-        .attr("fill", "white");
+    lasso.notSelectedItems();
+        //.attr("fill", "white");
         //.attr("r",3.5);
 
     // Pull selected elements to create new set
 
     var newSet = [];
-    var selectedElements = lasso.selectedItems()._groups[0]
+    var selectedElements = lasso.selectedItems()._groups[0];
+    //console.log("selected");
+    //console.log(selectedElements);
     if(lasso.selectedItems()._groups[0].length > 0){
     	for(var i = 0; i < selectedElements.length; i++){
-    		newSet.push(dic[ selectedElements[i].attributes.key.value ][ selectedElements[i].attributes.set.value ][4]);
+    		//console.log(selectedElements[i].firstChild.attributes.key.value);
+    		newSet.push(dic[ selectedElements[i].firstChild.attributes.key.value ]
+    			[ selectedElements[i].firstChild.attributes.set.value ][4]);
     	}
     	createNewSet(newSet);
     }
 };
 
+
+//Drag functions
+function drag_start(){
+	d3.select(this).raise().classed("active", true);
+}
+
+function drag_move(){
+	var k = d3.select(this).select("rect").attr("key");
+	var s = d3.select(this).select("rect").attr("set");
+	d3.select(this).select("text")
+		.attr("x", (d3.event.x + dic[k][s][2]/2))
+		.attr("y", (d3.event.y + dic[k][s][3]/2));
+	d3.select(this).select("rect")
+		.attr("x", d3.event.x)
+		.attr("y", d3.event.y);
+}
+
+function drag_end(){
+	d3.select(this).classed("active", false);
+}
 
 function getRandomColor(number) {
   var letters = ["white","green","red","orange","yellow","pink","grey","purple", "blue", 
@@ -117,7 +141,7 @@ function rightRoundedRect(x, y, width, height, radius) {
 function paint(dic){
 	svgContainer.selectAll(".set").remove();
 	svgContainer.selectAll(".element").remove();
-	svgContainer.selectAll(".label").remove();
+	//svgContainer.selectAll(".label").remove();
 
   for (var key in dic){
 	for (var set in dic[key]){
@@ -136,12 +160,21 @@ function paint(dic){
 				.style("stroke-width", 3);
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
-			svgContainer.append("rect")
-				.attr("class", "element")
+			var group = svgContainer.append("g")
+					.attr("class", "element")
+					//.attr("transform", 
+					//	"translate("+dic[key][set][0]+","+dic[key][set][1]+")")
+					.call(d3.drag()
+						.on("start", drag_start)
+						.on("drag", drag_move)
+						.on("end", drag_end));
+
+			group.append("rect")
+				//.attr("class", "element")
 				.attr("key", key)
 				.attr("set", set)
-				.attr("x", dic[key][set][0])
-				.attr("y", dic[key][set][1])
+				.attr("x", function(d){ return dic[key][set][0]; })
+				.attr("y", function(d){ return dic[key][set][1]; })
 				.attr("rx", 6)
 				.attr("ry", 6)
 				.attr("width", dic[key][set][2])
@@ -150,10 +183,10 @@ function paint(dic){
 				.style("stroke", "black")
 				.style("stroke-width", 3);
 
-			svgContainer.append("text")
-				.attr("class", "label")
-				.attr("x", dic[key][set][0]+dic[key][set][2]/2)
-				.attr("y", dic[key][set][1]+dic[key][set][3]/2)
+			group.append("text")
+				//.attr("class", "label")
+				.attr("x", function(d){ return dic[key][set][0] + dic[key][set][2]/2; })
+				.attr("y", function(d){ return dic[key][set][1] + dic[key][set][3]/2; })
 				.attr("dy", ".3em")
 				.attr("font-family", "Verdana")
 				.style("font-size", "13.5px")
