@@ -53,7 +53,9 @@ var lasso_end = function() {
 
 
 function getRandomColor(number) {
-  var letters = ["green","red","orange","yellow","pink","grey","purple", "blue"];
+  var letters = ["white","green","red","orange","yellow","pink","grey","purple", "blue", 
+  				"salmon", "yellowgreen", "maroon", "turquoise", "gold", "mediumvioletred", 
+  				"peachpuff", "thistle"];
   color = letters[number];
   return color;
 }
@@ -131,7 +133,7 @@ function paint(dic){
 				.attr("height", dic[key][set][3])
 				.attr("fill", getRandomColor(key))
 				.style("stroke", "black")
-				.style("stroke-width", 4);
+				.style("stroke-width", 3);
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			svgContainer.append("rect")
@@ -146,7 +148,7 @@ function paint(dic){
 				.attr("height", dic[key][set][3])
 				.attr("fill", "white")
 				.style("stroke", "black")
-				.style("stroke-width", 4);
+				.style("stroke-width", 3);
 
 			svgContainer.append("text")
 				.attr("class", "label")
