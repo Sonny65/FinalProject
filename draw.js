@@ -2,7 +2,9 @@ var svgContainer = d3.select("body").append("svg")
 									.attr("width", 4000)
 									.attr("height", 1280);
 
-
+var svgContainer2 = d3.select("body").append("svg")
+									.attr("width", 4000)
+									.attr("height", 1280);
 // Lasso functions
 var lasso_start = function() {
 	lasso.items()

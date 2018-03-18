@@ -1,3 +1,42 @@
+//Drag functions
+function drag_start(){
+  d3.select(this).raise().classed("active", true);
+  d3.select(this).select("rect")
+    .style("stroke-width", 3)
+    .style("cursor", "grabbing");
+  d3.select(this).select("text")
+    .style("cursor", "grabbing");
+}
+
+function drag_move(){
+  var es = d3.select(this).select("rect").attr("elements");
+  var e = d3.select(this).select("rect").attr("element");
+
+  d3.select(this).select("rect")
+    .attr("x", eledic[es][e][0] = (d3.event.x - eledic[es][e][2]/2))
+    .attr("y", eledic[es][e][1] = (d3.event.y - eledic[es][e][3]/2))
+    .style("cursor", "grabbing");
+  d3.select(this).select("text")
+    .attr("x", (d3.event.x))
+    .attr("y", (d3.event.y))
+    .style("cursor", "grabbing");
+
+  drawlink(eledic);
+  drawelements(eledic);
+
+}
+
+function drag_end(){
+  d3.select(this).classed("active", false);
+  d3.select(this).select("rect")
+    .style("stroke-width", 2)
+    .style("cursor", "auto");
+  d3.select(this).select("text")
+    .style("cursor", "auto");
+
+}
+
+
 function DupDesign(setlist){
   var setdic = [];
   var eledic = [];
@@ -72,14 +111,14 @@ function DupDesign(setlist){
 
 function DupPaint(designinfo){
   var setdic = designinfo[0];
-  var eledic = designinfo[1];
+  eledic = designinfo[1];
 
-  svgContainer.selectAll(".set").remove();
-	svgContainer.selectAll(".element").remove();
-	svgContainer.selectAll(".link").remove();
+  svgContainer2.selectAll(".set").remove();
+	svgContainer2.selectAll(".element").remove();
+	svgContainer2.selectAll(".link").remove();
 
   for (var set in setdic){
-    svgContainer.append("rect")
+    svgContainer2.append("rect")
       .attr("class", "set")
       .attr("x", setdic[set][0])
       .attr("y", setdic[set][1])
@@ -93,35 +132,51 @@ function DupPaint(designinfo){
   }
 
   drawlink(eledic);
+  drawelements(eledic);
+}
 
+function drawelements(eledic){
+  svgContainer2.selectAll(".element2").remove();
+  
   for (var elements in eledic){
-    for (var element in eledic[elements]){
-      svgContainer.append("rect")
-        .attr("class", "set")
-        .attr("x", eledic[elements][element][0])
-        .attr("y", eledic[elements][element][1])
-        .attr("rx", 6)
-        .attr("ry", 6)
-        .attr("width", eledic[elements][element][2])
-        .attr("height", eledic[elements][element][3])
-        .attr("fill", "white")
-        .style("stroke", "black")
-        .style("stroke-width", 3);
+      for (var element in eledic[elements]){
+        var group = svgContainer2.append("g")
+            .attr("class", "element2")
+            .call(d3.drag()
+              .on("start", drag_start)
+              .on("drag", drag_move)
+              .on("end", drag_end));
 
-        svgContainer.append("text")
-  				//.attr("class", "label")
-  				.attr("x", function(d){ return eledic[elements][element][0] + eledic[elements][element][2]/2; })
-  				.attr("y", function(d){ return eledic[elements][element][1] + eledic[elements][element][3]/2; })
-  				.attr("dy", ".3em")
-  				.attr("font-family", "Verdana")
-  				.style("font-size", "13.5px")
-  				.style("text-anchor", "middle")
-  				.text(elements);
+        group.append("rect")
+          .attr("class", "element2box")
+          .attr("elements", elements)
+          .attr("element", element)
+          .attr("x", eledic[elements][element][0])
+          .attr("y", eledic[elements][element][1])
+          .attr("rx", 6)
+          .attr("ry", 6)
+          .attr("width", eledic[elements][element][2])
+          .attr("height", eledic[elements][element][3])
+          .attr("fill", "white")
+          .style("stroke", "black")
+          .style("stroke-width", 3);
+
+          group.append("text")
+            .attr("class", "element2label")
+            .attr("x", function(d){ return eledic[elements][element][0] + eledic[elements][element][2]/2; })
+            .attr("y", function(d){ return eledic[elements][element][1] + eledic[elements][element][3]/2; })
+            .attr("dy", ".3em")
+            .attr("font-family", "Verdana")
+            .style("font-size", "13.5px")
+            .style("text-anchor", "middle")
+            .text(elements);
+      }
     }
-  }
 }
 
 function drawlink(eledic){
+  svgContainer2.selectAll("line").remove();
+
   for (var elements in eledic){
     if (eledic[elements].length > 1){
       var x = 0;
@@ -133,7 +188,7 @@ function drawlink(eledic){
       x = x/eledic[elements].length;
       y = y/eledic[elements].length;
       for (var element in eledic[elements]){
-        svgContainer.append("line")
+        svgContainer2.append("line")
   				//.attr("class", "label")
   				.attr("x1", function(d){ return eledic[elements][element][0] + eledic[elements][element][2]/2; })
   				.attr("y1", function(d){ return eledic[elements][element][1] + eledic[elements][element][3]/2; })
