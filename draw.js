@@ -59,21 +59,35 @@ var lasso_end = function() {
 //Drag functions
 function drag_start(){
 	d3.select(this).raise().classed("active", true);
+	d3.select(this).select("rect")
+		.style("stroke-width", 3)
+		.style("cursor", "grabbing");
+	d3.select(this).select("text")
+		.style("cursor", "grabbing");
 }
 
 function drag_move(){
 	var k = d3.select(this).select("rect").attr("key");
 	var s = d3.select(this).select("rect").attr("set");
-	d3.select(this).select("text")
-		.attr("x", (d3.event.x + dic[k][s][2]/2))
-		.attr("y", (d3.event.y + dic[k][s][3]/2));
+
 	d3.select(this).select("rect")
-		.attr("x", d3.event.x)
-		.attr("y", d3.event.y);
+		.attr("x", (d3.event.x - dic[k][s][2]/2))
+		.attr("y", (d3.event.y - dic[k][s][3]/2))
+		.style("cursor", "grabbing");
+	d3.select(this).select("text")
+		.attr("x", (d3.event.x))
+		.attr("y", (d3.event.y))
+		.style("cursor", "grabbing");
+
 }
 
 function drag_end(){
 	d3.select(this).classed("active", false);
+	d3.select(this).select("rect")
+		.style("stroke-width", 2)
+		.style("cursor", "auto");
+	d3.select(this).select("text")
+		.style("cursor", "auto");
 }
 
 function getRandomColor(number) {
@@ -82,6 +96,16 @@ function getRandomColor(number) {
   				"peachpuff", "thistle"];
   color = letters[number];
   return color;
+}
+
+//Collision functions
+var rectangles = d3.selectAll("rect");
+
+var simulation = d3.forceSimulation(rectangles)
+					.force("collide", d3.forceCollide());
+
+function dragsubject(){
+	return simulation.find(d3.event.x, d3.event.y);
 }
 
 /*function fillRoundedRect(x, y, w, h, r, color){
@@ -157,7 +181,7 @@ function paint(dic){
 				.attr("height", dic[key][set][3])
 				.attr("fill", getRandomColor(key))
 				.style("stroke", "black")
-				.style("stroke-width", 3);
+				.style("stroke-width", 2);
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			var group = svgContainer.append("g")
@@ -170,7 +194,7 @@ function paint(dic){
 						.on("end", drag_end));
 
 			group.append("rect")
-				//.attr("class", "element")
+				.attr("class", "elementbox")
 				.attr("key", key)
 				.attr("set", set)
 				.attr("x", function(d){ return dic[key][set][0]; })
@@ -181,10 +205,10 @@ function paint(dic){
 				.attr("height", dic[key][set][3])
 				.attr("fill", "white")
 				.style("stroke", "black")
-				.style("stroke-width", 3);
+				.style("stroke-width", 2);
 
 			group.append("text")
-				//.attr("class", "label")
+				.attr("class", "elementlabel")
 				.attr("x", function(d){ return dic[key][set][0] + dic[key][set][2]/2; })
 				.attr("y", function(d){ return dic[key][set][1] + dic[key][set][3]/2; })
 				.attr("dy", ".3em")
@@ -374,6 +398,8 @@ function drawComED(hierarchy, numsets){
 	}
 	var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,50,dic);
+	console.log("dic");
+	console.log(dic);
 	paint(dic);
 
 
