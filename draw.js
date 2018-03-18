@@ -1,6 +1,6 @@
 var svgContainer = d3.select("body").append("svg")
 									.attr("width", 4000)
-									.attr("height", 1080);
+									.attr("height", 1280);
 
 
 // Lasso functions
@@ -162,7 +162,7 @@ function paint(dic){
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			var group = svgContainer.append("g")
 					.attr("class", "element")
-					//.attr("transform", 
+					//.attr("transform",
 					//	"translate("+dic[key][set][0]+","+dic[key][set][1]+")")
 					.call(d3.drag()
 						.on("start", drag_start)
@@ -379,9 +379,6 @@ function drawComED(hierarchy, numsets){
 
 }
 
-function drawDupED(setlist, elementlist){
-
-}
 
 
 //drawComED();
