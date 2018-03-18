@@ -1,5 +1,5 @@
 //Drag functions
-function drag_start(){
+function drag2_start(){
   d3.select(this).raise().classed("active", true);
   d3.select(this).select("rect")
     .style("stroke-width", 3)
@@ -8,7 +8,7 @@ function drag_start(){
     .style("cursor", "grabbing");
 }
 
-function drag_move(){
+function drag2_move(){
   var es = d3.select(this).select("rect").attr("elements");
   var e = d3.select(this).select("rect").attr("element");
 
@@ -26,7 +26,7 @@ function drag_move(){
 
 }
 
-function drag_end(){
+function drag2_end(){
   d3.select(this).classed("active", false);
   d3.select(this).select("rect")
     .style("stroke-width", 2)
@@ -137,15 +137,15 @@ function DupPaint(designinfo){
 
 function drawelements(eledic){
   svgContainer2.selectAll(".element2").remove();
-  
+
   for (var elements in eledic){
       for (var element in eledic[elements]){
         var group = svgContainer2.append("g")
             .attr("class", "element2")
             .call(d3.drag()
-              .on("start", drag_start)
-              .on("drag", drag_move)
-              .on("end", drag_end));
+              .on("start", drag2_start)
+              .on("drag", drag2_move)
+              .on("end", drag2_end));
 
         group.append("rect")
           .attr("class", "element2box")

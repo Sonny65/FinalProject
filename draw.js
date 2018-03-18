@@ -399,7 +399,7 @@ function drawComED(hierarchy, numsets){
 		dic.push(new Array());
 	}
 	var test = {"set": 0, "elements": [], "children": hierarchy};
-	design(test,50,50,dic);
+	design(test,50,100,dic);
 	console.log("dic");
 	console.log(dic);
 	paint(dic);
