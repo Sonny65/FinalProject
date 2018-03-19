@@ -98,7 +98,7 @@ function drag_end(){
 
 function getRandomColor(number) {
   var letters = ["white","green","red","orange","yellow","pink","gray","mediumpurple", "blue",
-  				"salmon", "olivedrab", "brown", "turquoise", "gold", "mediumvioletred",
+  				"salmon", "yellowgreen", "brown", "turquoise", "gold", "mediumvioletred",
   				"peachpuff", "thistle"];
   var color = letters[number];
   return color;
@@ -106,7 +106,7 @@ function getRandomColor(number) {
 
 function getRandomOuterColor(number) {
   var letters = ["white","darkgreen","firebrick","darkorange","gold","palevioletred","dimgray","rebeccapurple", "mediumblue",
-  				"indianred", "yellowgreen", "maroon", "darkturquoise", "orange", "purple",
+  				"indianred", "olivedrab", "maroon", "darkturquoise", "orange", "purple",
   				"pink", "plum"];
   var color = letters[number];
   return color;
@@ -411,12 +411,12 @@ function design(tree,x1,y1,dic, depth){
 		if (coordinate[1]+10 > y2) {
 			y2 = coordinate[1]+10;
 		}
-		//if(depth == 0){
+		if(depth == 0){
 			if(x2 > 1000){
-				x2 = x1;
+				x2 = x1+10;
 				y1 = y2 + 10;
 			}
-		//}
+		}
 	}
 	dic[tree.set].push([x1, y1, x2-x1, y2-y1]);
 	return [x2,y2];
