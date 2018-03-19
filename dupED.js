@@ -126,6 +126,7 @@ function DupPaint(designinfo){
   for (var set in setdic){
     svgContainer2.append("rect")
       .attr("class", "set")
+      .attr("set", set)
       .attr("x", setdic[set][0])
       .attr("y", setdic[set][1])
       .attr("rx", 6)
@@ -134,7 +135,23 @@ function DupPaint(designinfo){
       .attr("height", setdic[set][3])
       .attr("fill", getRandomColor(setdic[set][4]))
       .style("stroke", getRandomOuterColor(setdic[set][4]))
-      .style("stroke-width", 3);
+      .style("stroke-width", 3)
+      .on("mouseover", function(){
+          div.transition()
+            .duration(100)
+            .style("opacity", 1);
+          console.log(newSetList);
+          var index = d3.select(this).attr("set");
+          console.log(index);
+          div.html("Organization: " + newSetList[index].name)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY) + "px");       
+        })
+        .on("mouseout", function(){
+          div.transition()
+            .duration(100)
+            .style("opacity", 0);
+        });
   }
 
   drawlink(eledic);
