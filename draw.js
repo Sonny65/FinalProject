@@ -1,6 +1,6 @@
 var svgContainer = d3.select("body").append("svg")
 									.attr("width", 4000)
-									.attr("height", 1280);
+									.attr("height", 1200);
 
 var svgContainer2 = d3.select("body").append("svg")
 									.attr("width", 4000)
@@ -328,7 +328,7 @@ function paint(dic){
 
 }
 
-function design(tree,x1,y1,dic){
+function design(tree,x1,y1,dic, depth){
 	var coordinate;
 	var x2 = x1+10;
 	var y2 = y1+10;
@@ -357,10 +357,16 @@ function design(tree,x1,y1,dic){
 		y2 += 60;
 	}
 	for(var i = 0; i < tree.children.length; i++){
-		coordinate = design(tree.children[i],x2,y1+10,dic);
+		coordinate = design(tree.children[i],x2,y1+10,dic, depth+1);
 		x2 = coordinate[0]+10;
 		if (coordinate[1]+10 > y2) {
 			y2 = coordinate[1]+10;
+		}
+		if(depth == 0){
+			if(x2 > 1000){
+				x2 = 50;
+				y1 = y2 + 10;
+			}
 		}
 	}
 	dic[tree.set].push([x1, y1, x2-x1, y2-y1]);
@@ -406,7 +412,7 @@ function drawComED(hierarchy, numsets){
 		dic.push(new Array());
 	}
 	var test = {"set": 0, "elements": [], "children": hierarchy};
-	design(test,50,100,dic);
+	design(test,50,100,dic, 0);
 	console.log("dic");
 	console.log(dic);
 	paint(dic);
