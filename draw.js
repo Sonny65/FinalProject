@@ -97,10 +97,18 @@ function drag_end(){
 }
 
 function getRandomColor(number) {
-  var letters = ["white","green","red","orange","yellow","pink","grey","purple", "blue",
-  				"salmon", "yellowgreen", "maroon", "turquoise", "gold", "mediumvioletred",
+  var letters = ["white","green","red","orange","yellow","pink","gray","mediumpurple", "blue",
+  				"salmon", "olivedrab", "brown", "turquoise", "gold", "mediumvioletred",
   				"peachpuff", "thistle"];
-  color = letters[number];
+  var color = letters[number];
+  return color;
+}
+
+function getRandomOuterColor(number) {
+  var letters = ["white","darkgreen","firebrick","darkorange","gold","palevioletred","dimgray","rebeccapurple", "mediumblue",
+  				"indianred", "yellowgreen", "maroon", "darkturquoise", "orange", "purple",
+  				"pink", "plum"];
+  var color = letters[number];
   return color;
 }
 
@@ -186,11 +194,8 @@ function paint(dic){
 				.attr("width", dic[key][set][2])
 				.attr("height", dic[key][set][3])
 				.attr("fill", getRandomColor(key))
-				.style("stroke", function(){
-					if(key == 0){ return "white"; }
-					return "black";
-				})
-				.style("stroke-width", 2);
+				.style("stroke", getRandomOuterColor(key))
+				.style("stroke-width", 3);
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			var group = svgContainer.append("g")
@@ -236,7 +241,29 @@ function paint(dic){
 					}
 				}
 				// draw link
-				for (var set in dic[key]){
+				if(dic[key].length > 1){
+					var x = 0;
+					var y = 0;
+					//calculate midpoint
+					for(var set in dic[key]){
+						x += dic[key][set][0] + dic[key][set][2]/2;
+				        y += dic[key][set][1] + dic[key][set][3]/2;
+				      }
+				      x = x/dic[key].length;
+				      y = y/dic[key].length;
+				      for (var set in dic[key]){
+				        svgContainer.append("line")
+				  				.attr("class", "link")
+				  				.attr("x1", function(d){ return dic[key][set][0] + dic[key][set][2]/2; })
+				  				.attr("y1", function(d){ return dic[key][set][1] + dic[key][set][3]/2; })
+				  				.attr("x2", x)
+				  				.attr("y2", y)
+				          .style("stroke", getRandomColor(key))
+				          .style("stroke-opacity", 1)
+				          .style("stroke-width", 8);
+					}
+				}
+				/*for (var set in dic[key]){
 					if (dic[key].length > 1){
 						svgContainer.append("rect")
 							.attr("class", "link")
@@ -268,7 +295,7 @@ function paint(dic){
 							.style("stroke", "black")
 							.style("stroke-width", 1);
 					}
-				}
+				}*/
 			} else {
 				var height = 0;
 				for (var set in dic[key]){
@@ -277,7 +304,29 @@ function paint(dic){
 					}
 				}
 				// draw link
-				for (var set in dic[key]){
+				if(dic[key].length > 1){
+					var x = 0;
+					var y = 0;
+					//calculate midpoint
+					for(var set in dic[key]){
+						x += dic[key][set][0] + dic[key][set][2]/2;
+				        y += dic[key][set][1] + dic[key][set][3]/2;
+				      }
+				      x = x/dic[key].length;
+				      y = y/dic[key].length;
+				      for (var set in dic[key]){
+				        svgContainer.append("line")
+				  				.attr("class", "link")
+				  				.attr("x1", function(d){ return dic[key][set][0] + dic[key][set][2]/2; })
+				  				.attr("y1", function(d){ return dic[key][set][1] + dic[key][set][3]/2; })
+				  				.attr("x2", x)
+				  				.attr("y2", y)
+				          .style("stroke", getRandomColor(key))
+				          .style("stroke-opacity", 1)
+				          .style("stroke-width", 8);
+					}
+				}
+				/*for (var set in dic[key]){
 					if (dic[key].length > 1){
 						svgContainer.append("rect")
 							.attr("class", "link")
@@ -309,7 +358,7 @@ function paint(dic){
 							.style("stroke", "black")
 							.style("stroke-width", 1);
 					}
-				}
+				}*/
 			}
 		}
   }
@@ -362,12 +411,12 @@ function design(tree,x1,y1,dic, depth){
 		if (coordinate[1]+10 > y2) {
 			y2 = coordinate[1]+10;
 		}
-		if(depth == 0){
+		//if(depth == 0){
 			if(x2 > 1000){
-				x2 = 50;
+				x2 = x1;
 				y1 = y2 + 10;
 			}
-		}
+		//}
 	}
 	dic[tree.set].push([x1, y1, x2-x1, y2-y1]);
 	return [x2,y2];

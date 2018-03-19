@@ -202,7 +202,7 @@ function drawlink(eledic){
   				.attr("x2", x)
   				.attr("y2", y)
           .style("stroke", "black")
-          .style("stroke-opacity", 0.5)
+          .style("stroke-opacity", 0.8)
           .style("stroke-width", 5);
       }
     }
