@@ -15,6 +15,7 @@ function drag2_move(){
   d3.select(this).select("rect")
     .attr("x", eledic[es][e][0] = (d3.event.x - eledic[es][e][2]/2))
     .attr("y", eledic[es][e][1] = (d3.event.y - eledic[es][e][3]/2))
+    .style("stroke-width", 3)
     .style("cursor", "grabbing");
   d3.select(this).select("text")
     .attr("x", (d3.event.x))
@@ -106,6 +107,12 @@ function DupDesign(setlist){
     graphx += 10;
   }
 
+  console.log("setlist");
+  console.log(setlist);
+  console.log("setdic");
+  console.log(setdic);
+  console.log("eledic");
+  console.log(eledic);
   return [setdic,eledic];
 }
 
@@ -128,7 +135,7 @@ function DupPaint(designinfo){
       .attr("height", setdic[set][3])
       .attr("fill", getRandomColor(setdic[set][4]))
       .style("stroke", "black")
-      .style("stroke-width", 3);
+      .style("stroke-width", 2);
   }
 
   drawlink(eledic);
@@ -159,7 +166,7 @@ function drawelements(eledic){
           .attr("height", eledic[elements][element][3])
           .attr("fill", "white")
           .style("stroke", "black")
-          .style("stroke-width", 3);
+          .style("stroke-width", 2);
 
           group.append("text")
             .attr("class", "element2label")
@@ -196,7 +203,7 @@ function drawlink(eledic){
   				.attr("y2", y)
           .style("stroke", "black")
           .style("stroke-opacity", 0.5)
-          .style("stroke-width", 10);
+          .style("stroke-width", 5);
       }
     }
   }

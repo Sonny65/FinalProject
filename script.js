@@ -44,6 +44,9 @@ d3.text('Organizations.csv', function(error, data){
 			}
 		}
 	}
+	for(var i = 0; i < newSetList.length; i++){
+		newSetList[i].elements.sort(function() { return 0.5 - Math.random(); });
+	}
 
 	tempElementList = [...new Set(tempElementList)];
 	for(var i = 0; i < tempElementList.length; i++){
@@ -71,6 +74,78 @@ function createNewSet(set){
 
 	var setHierarchy = sortSetsCom(newSetList, newElementList);
 	drawComED(setHierarchy, newSetList.length);
+}
+
+function moveElement(x, y, k, s){
+	console.log("x:" + x + " y:" + y);
+
+	var tempArray = [];
+	for(var key in dic){
+		for(var set in dic[key]){
+			var temp = dic[key][set];
+			//0 -> x	2 -> width		4->name
+			//1 -> y	3 -> height
+			if((x >= temp[0]) && (x <= (temp[0]+temp[2])) && 
+			   (y >= temp[1]) && (y <= temp[1]+temp[3])) {
+				if(key > 0 && (key < dic.length-1)){
+					tempArray.push(key);
+				}
+			}  
+		}
+	}
+	console.log(dic[k][s][4]);
+	console.log("tempArray");
+	console.log(tempArray);
+
+	//Create true/false array
+	var inArray = [];
+	for(var i = 0; i < newSetList.length; i++){
+		inArray.push(false);
+	}
+	for(var i = 0; i < tempArray.length; i++){
+		inArray[tempArray[i]-1] = true;
+		console.log(tempArray[i]-1);
+	}
+	console.log("inArray");
+	console.log(inArray);
+
+	//Modify newSetList
+	var elementName = dic[k][s][4];
+	for(var i = 0; i < newSetList.length; i++){
+		var found = false;
+		var foundIndex = -1;
+
+		for(var j = 0; j < newSetList[i].elements.length; j++){
+			if(elementName == newSetList[i].elements[j]){
+				found = true;
+				foundIndex = j;
+				break;
+			}
+		}
+		//if name SHOULD be in array
+		if(inArray[i]){
+			if(found){
+				//do nothing
+			}
+			else{
+				//add to array
+				newSetList[i].elements.push(elementName);
+			}
+		}
+		//if name SHOULD NOT be in array
+		else{
+			if(found){
+				//delete from array
+				newSetList[i].elements.splice(foundIndex, 1);
+			}
+			else{
+				//do nothing
+			}
+		}
+
+	}
+	var setHierarchy = sortSetsCom(newSetList, newElementList);
+	drawComED(setHierarchy, newSetList.length);	
 }
 
 //var testSetHierarchy = sortSets(setList, elementList);

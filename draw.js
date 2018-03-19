@@ -90,6 +90,10 @@ function drag_end(){
 		.style("cursor", "auto");
 	d3.select(this).select("text")
 		.style("cursor", "auto");
+
+	var k = d3.select(this).select("rect").attr("key");
+	var s = d3.select(this).select("rect").attr("set");
+	moveElement(d3.event.x, d3.event.y, k, s);
 }
 
 function getRandomColor(number) {
@@ -182,7 +186,10 @@ function paint(dic){
 				.attr("width", dic[key][set][2])
 				.attr("height", dic[key][set][3])
 				.attr("fill", getRandomColor(key))
-				.style("stroke", "black")
+				.style("stroke", function(){
+					if(key == 0){ return "white"; }
+					return "black";
+				})
 				.style("stroke-width", 2);
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
