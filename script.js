@@ -74,6 +74,7 @@ function createNewSet(set){
 
 	var setHierarchy = sortSetsCom(newSetList, newElementList);
 	drawComED(setHierarchy, newSetList.length);
+	drawDupED(newSetList, newElementList);
 }
 
 function moveComElement(x, y, k, s){

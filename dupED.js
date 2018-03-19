@@ -37,7 +37,6 @@ function drag2_end(){
 
 }
 
-
 function DupDesign(setlist){
   var setdic = [];
   var eledic = [];
