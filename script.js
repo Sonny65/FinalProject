@@ -76,8 +76,8 @@ function createNewSet(set){
 	drawComED(setHierarchy, newSetList.length);
 }
 
-function moveElement(x, y, k, s){
-	console.log("x:" + x + " y:" + y);
+function moveComElement(x, y, k, s){
+	var elementName = dic[k][s][4];
 
 	var tempArray = [];
 	for(var key in dic){
@@ -88,11 +88,33 @@ function moveElement(x, y, k, s){
 			if((x >= temp[0]) && (x <= (temp[0]+temp[2])) && 
 			   (y >= temp[1]) && (y <= temp[1]+temp[3])) {
 				if(key > 0 && (key < dic.length-1)){
-					tempArray.push(key);
+					tempArray.push(+key);
 				}
 			}  
 		}
 	}
+
+	//if moved outside of all sets, return
+	if(tempArray.length == 0) return;
+
+	//if moved within the same box, return
+	console.log("newElementList");
+	console.log(newElementList);
+	for(var i = 0; i < newElementList.length; i++){
+		if(newElementList[i].name == elementName && 
+			newElementList[i].sets.length == tempArray.length){
+
+			var equal = true;
+			for(var j = 0; j < newElementList[i].sets.length; j++){
+				if(newElementList[i].sets[j] != tempArray[j]){
+					equal = false;
+				}
+			}
+			if(equal) return;
+
+		}
+	}
+
 	console.log(dic[k][s][4]);
 	console.log("tempArray");
 	console.log(tempArray);
@@ -104,13 +126,11 @@ function moveElement(x, y, k, s){
 	}
 	for(var i = 0; i < tempArray.length; i++){
 		inArray[tempArray[i]-1] = true;
-		console.log(tempArray[i]-1);
 	}
 	console.log("inArray");
 	console.log(inArray);
 
 	//Modify newSetList
-	var elementName = dic[k][s][4];
 	for(var i = 0; i < newSetList.length; i++){
 		var found = false;
 		var foundIndex = -1;

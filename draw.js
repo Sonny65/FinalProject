@@ -93,7 +93,7 @@ function drag_end(){
 
 	var k = d3.select(this).select("rect").attr("key");
 	var s = d3.select(this).select("rect").attr("set");
-	moveElement(d3.event.x, d3.event.y, k, s);
+	moveComElement(d3.event.x, d3.event.y, k, s);
 }
 
 function getRandomColor(number) {
@@ -403,7 +403,7 @@ function design(tree,x1,y1,dic, depth){
 	}
 
 	if ( xcount != 0 ){
-		y2 += 60;
+		y2 += 40;
 	}
 	for(var i = 0; i < tree.children.length; i++){
 		coordinate = design(tree.children[i],x2,y1+10,dic, depth+1);

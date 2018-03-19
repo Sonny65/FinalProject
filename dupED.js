@@ -95,7 +95,7 @@ function DupDesign(setlist){
       rowheight += 30;
     }
 
-    if (rowidth>1280) {
+    if (rowidth>1000) {
       graphx = 0;
       graphy = rowheight+10;
       rowheight += 10;
@@ -134,8 +134,8 @@ function DupPaint(designinfo){
       .attr("width", setdic[set][2])
       .attr("height", setdic[set][3])
       .attr("fill", getRandomColor(setdic[set][4]))
-      .style("stroke", "black")
-      .style("stroke-width", 2);
+      .style("stroke", getRandomOuterColor(setdic[set][4]))
+      .style("stroke-width", 3);
   }
 
   drawlink(eledic);
@@ -202,7 +202,7 @@ function drawlink(eledic){
   				.attr("x2", x)
   				.attr("y2", y)
           .style("stroke", "black")
-          .style("stroke-opacity", 0.8)
+          .style("stroke-opacity", 0.7)
           .style("stroke-width", 5);
       }
     }
