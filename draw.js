@@ -203,15 +203,17 @@ function paint(dic){
 				.style("stroke", getRandomOuterColor(key))
 				.style("stroke-width", 3)
 				.on("mouseover", function(){
-					div.transition()
+					var index = d3.select(this).attr("key");
+					if(index > 0){
+						div.transition()
 						.duration(100)
 						.style("opacity", 1);
-					console.log(newSetList);
-					var index = d3.select(this).attr("key");
-					console.log(index);
-					div.html("Organization: " + newSetList[index-1].name)
-						.style("left", (d3.event.pageX) + "px")
-						.style("top", (d3.event.pageY) + "px");				
+						console.log(newSetList);
+						console.log(index);
+						div.html("Organization: " + newSetList[index-1].name)
+							.style("left", (d3.event.pageX) + "px")
+							.style("top", (d3.event.pageY) + "px");
+					}				
 				})
 				.on("mouseout", function(){
 					div.transition()
