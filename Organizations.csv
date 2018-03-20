@@ -1,25 +1,25 @@
-EU,NATO,BSTDB,APEC,OPEC,ICMPD,ICMP,ACAP,PEMSEA,APFIC
-Austria,Albania,Albania,Australia,Algeria,Austria,Belgium,Argentina,Cambodia,Australia
-Belgium,Belgium,Armenia,Brunei,Angola,Bosnia and Herzegovina,Chile,Australia,China,Bangladesh
-Bulgaria,Bulgaria,Azerbaijan,Canada,Ecuador,Bulgaria,Cyprus,Brazil,Indonesia,Cambodia
-Croatia,Canada,Bulgaria,Chile,Equatorial Guinea,Croatia,El Salvador,Chile,Japan,China
-Cyprus,Croatia,Georgia,China,Gabon,Czech Republic,Luxembourg,Ecuador,Laos,France
-Czech Republic,Czech Republic,Greece,Hong Kong,Iran,Hungary,Netherlands,France,North Korea,India
-Denmark,Denmark,Moldova,Indonesia,Iraq,Poland,Serbia,New Zealand,Philippines,Indonesia
-Estonia,Estonia,Romania,Japan,Kuwait,Romania,Sweden,Norway,South Korea,Japan
-Finland,France,Russia,South Korea,Libya,Serbia,UK,Peru,Singapore,South Korea
-France,Germany,Turkey,Malaysia,Nigeria,Slovakia,,South Africa,Thailand,Malaysia
-Germany,Greece,Ukraine,Mexico,Qatar,Slovenia,,Spain,Timor-Leste,Myanmar
-Greece,Hungary,,New Zealand,Saudi Arabia,Sweden,,UK,Vietnam,Nepal
-Hungary,Iceland,,Peru,UAE,Switzerland,,Uruguay,,New Zealand
-Ireland,Italy,,Philippines,Venezuela,,,,,Pakistan
-Italy,Latvia,,Papua New Guinea,,,,,,Philippines
-Latvia,Lithuania,,Russia,,,,,,Vietnam
-Lithuania,Luxembourg,,Singapore,,,,,,Sri Lanka
-Luxembourg,Montenegro,,Thailand,,,,,,Timor Leste
-Malta,Netherlands,,US,,,,,,Thailand
-Netherlands,Norway,,Vietnam,,,,,,UK
-Poland,Poland,,,,,,,,US
+EU,NATO,BSTDB,APEC,OPEC,ICMPD,ACAP,PEMSEA,APFIC,D5
+Austria,Albania,Albania,Australia,Algeria,Austria,Argentina,Cambodia,Australia,Canada
+Belgium,Belgium,Armenia,Brunei,Angola,Bosnia and Herzegovina,Australia,China,Bangladesh,Estonia
+Bulgaria,Bulgaria,Azerbaijan,Canada,Ecuador,Bulgaria,Brazil,Indonesia,Cambodia,Israel
+Croatia,Canada,Bulgaria,Chile,Equatorial Guinea,Croatia,Chile,Japan,China,New Zealand
+Cyprus,Croatia,Georgia,China,Gabon,Czech Republic,Ecuador,Laos,France,South Korea
+Czech Republic,Czech Republic,Greece,Hong Kong,Iran,Hungary,France,North Korea,India,UK
+Denmark,Denmark,Moldova,Indonesia,Iraq,Poland,New Zealand,Philippines,Indonesia,Uruguay
+Estonia,Estonia,Romania,Japan,Kuwait,Romania,Norway,South Korea,Japan,
+Finland,France,Russia,South Korea,Libya,Serbia,Peru,Singapore,South Korea,
+France,Germany,Turkey,Malaysia,Nigeria,Slovakia,South Africa,Thailand,Malaysia,
+Germany,Greece,Ukraine,Mexico,Qatar,Slovenia,Spain,Timor-Leste,Myanmar,
+Greece,Hungary,,New Zealand,Saudi Arabia,Sweden,UK,Vietnam,Nepal,
+Hungary,Iceland,,Peru,UAE,Switzerland,Uruguay,,New Zealand,
+Ireland,Italy,,Philippines,Venezuela,,,,Pakistan,
+Italy,Latvia,,Papua New Guinea,,,,,Philippines,
+Latvia,Lithuania,,Russia,,,,,Vietnam,
+Lithuania,Luxembourg,,Singapore,,,,,Sri Lanka,
+Luxembourg,Montenegro,,Thailand,,,,,Timor Leste,
+Malta,Netherlands,,US,,,,,Thailand,
+Netherlands,Norway,,Vietnam,,,,,UK,
+Poland,Poland,,,,,,,US,
 Portugal,Portugal,,,,,,,,
 Romania,Romania,,,,,,,,
 Slovakia,Slovakia,,,,,,,,

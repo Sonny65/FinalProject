@@ -145,7 +145,7 @@ function DupPaint(designinfo){
           console.log(index);
           div.html("Organization: " + newSetList[index].name)
             .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY) + "px");       
+            .style("top", (d3.event.pageY) + "px");
         })
         .on("mouseout", function(){
           div.transition()
