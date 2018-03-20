@@ -237,7 +237,13 @@ function paint(dic){
 					.attr("font-family", "Verdana")
 					.style("font-size", "12px")
 					.style("text-anchor", "middle")
-					.text(dic[key][set][4]);
+					.text(function(){
+						var index = dic[key][set][4]
+						if(index > 0){
+							return newSetList[index-1].name;
+						}
+						return "";
+					});
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			var group = svgContainer.append("g")
