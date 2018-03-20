@@ -230,20 +230,24 @@ function paint(dic){
 						.style("opacity", 0);
 				});
 
+				var length = 0;
+
+
 				svgContainer.append("text")
 					.attr("class", "setext")
-					.attr("x", dic[key][set][0]+dic[key][set][2]-10)
 					.attr("y", dic[key][set][1]+dic[key][set][3]-2)
 					.attr("font-family", "Verdana")
-					.style("font-size", "12px")
-					.style("text-anchor", "middle")
+					.style("font-size", "8px")
+					.style("text-anchor", "right")
 					.text(function(){
-						var index = dic[key][set][4]
+						var index = dic[key][set][4];
 						if(index > 0){
+							length = (newSetList[index-1].name).length * 5.5;
 							return newSetList[index-1].name;
 						}
 						return "";
-					});
+					})
+					.attr("x", dic[key][set][0]+dic[key][set][2]-length);
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			var group = svgContainer.append("g")
