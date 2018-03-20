@@ -19,6 +19,8 @@ var div = d3.select("body").append("div")
 			.style("opacity", 0);			
 
 // Lasso functions
+// Modified from https://bl.ocks.org/skokenes/a85800be6d89c76c1ca98493ae777572
+
 var lasso_start = function() {
 	lasso.items()
 		//.attr("r",3.5) // reset size
