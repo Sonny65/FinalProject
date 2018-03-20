@@ -142,6 +142,7 @@ function DupPaint(designinfo){
 }
 
 function drawelements(eledic){
+  
   svgContainer2.selectAll(".element2").remove();
 
   for (var elements in eledic){
@@ -209,6 +210,42 @@ function drawlink(eledic){
 }
 
 function drawDupED(setlist, elementlist){
+  // sortDupset(setlist);
 	var designinfo = DupDesign(setlist);
   DupPaint(designinfo);
+}
+
+function subset(arr1, arr2){
+  isSuperset = true;
+
+  for (var element in arr1){
+    if (!arr2.includes(arr1[element])) {
+      isSuperset = false;
+    }
+  }
+
+  return isSuperset;
+}
+
+function sortDupset(setlist){
+  console.log("Sort Set");
+
+  for (var set in setlist){
+    setlist[set]["Childset"] = [];
+  }
+
+  // console.log(setlist);
+
+  for (var set in setlist){
+    for (var otherset in setlist){
+      if (set != otherset){
+        if (subset(setlist[set]["elements"],setlist[otherset]["elements"])){
+          setlist[otherset]["Childset"].push(setlist[set]["elements"]);
+        }
+      }
+    }
+  }
+
+  console.log(setlist);
+
 }

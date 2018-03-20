@@ -1,6 +1,14 @@
+var title = d3.select("body").append("h1")
+									.attr("font-family", "Verdana")
+									.text("Compact Rectangular Euler Diagram");
+
 var svgContainer = d3.select("body").append("svg")
 									.attr("width", 3000)
 									.attr("height", 1200);
+
+var title = d3.select("body").append("h1")
+									.attr("font-family", "Verdana")
+									.text("Euler Diagram with Duplications");
 
 var svgContainer2 = d3.select("body").append("svg")
 									.attr("width", 2000)
@@ -180,10 +188,11 @@ function paint(dic){
 	svgContainer.selectAll(".set").remove();
 	svgContainer.selectAll(".element").remove();
 	svgContainer.selectAll(".link").remove();
+	svgContainer.selectAll(".setext").remove();
 
   for (var key in dic){
 	for (var set in dic[key]){
-		if(dic[key][set].length == 4){
+		if(dic[key][set][5] == "set"){
 			// fillRoundedRect(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key);
 			svgContainer.append("rect")
 				.attr("class", "set")
@@ -196,6 +205,16 @@ function paint(dic){
 				.attr("fill", getRandomColor(key))
 				.style("stroke", getRandomOuterColor(key))
 				.style("stroke-width", 3);
+
+			svgContainer.append("text")
+				.attr("class", "setext")
+				.attr("x", dic[key][set][0]+dic[key][set][2]-10)
+				.attr("y", dic[key][set][1]+dic[key][set][3]-2)
+				.attr("font-family", "Verdana")
+				.style("font-size", "12px")
+				.style("text-anchor", "middle")
+				.text(dic[key][set][4]);
+
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			var group = svgContainer.append("g")
@@ -418,7 +437,7 @@ function design(tree,x1,y1,dic, depth){
 			}
 		}
 	}
-	dic[tree.set].push([x1, y1, x2-x1, y2-y1]);
+	dic[tree.set].push([x1, y1, x2-x1, y2-y1,tree.set,"set"]);
 	return [x2,y2];
 }
 
@@ -453,8 +472,6 @@ function drawComED(hierarchy, numsets){
 					  	{"set": 3, "elements": [7], "children": []}
 					];
 
-	console.log("hierarchy");
-	console.log(hierarchy);
 	//dic = {0:new Array(),1:new Array(),2:new Array(),3:new Array(),4:new Array(),5:new Array(),6:new Array()};
 	dic = [];
 	for(var i = 0; i < numsets+2; i++){
@@ -462,11 +479,7 @@ function drawComED(hierarchy, numsets){
 	}
 	var test = {"set": 0, "elements": [], "children": hierarchy};
 	design(test,50,100,dic, 0);
-	console.log("dic");
-	console.log(dic);
 	paint(dic);
-
-
 }
 
 
