@@ -13,6 +13,11 @@ var title = d3.select("body").append("h1")
 var svgContainer2 = d3.select("body").append("svg")
 									.attr("width", 2000)
 									.attr("height", 1280);
+
+var div = d3.select("body").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);			
+
 // Lasso functions
 var lasso_start = function() {
 	lasso.items()
@@ -196,6 +201,7 @@ function paint(dic){
 			// fillRoundedRect(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key);
 			svgContainer.append("rect")
 				.attr("class", "set")
+				.attr("key", key)
 				.attr("x", dic[key][set][0])
 				.attr("y", dic[key][set][1])
 				.attr("rx", 6)
@@ -204,17 +210,34 @@ function paint(dic){
 				.attr("height", dic[key][set][3])
 				.attr("fill", getRandomColor(key))
 				.style("stroke", getRandomOuterColor(key))
-				.style("stroke-width", 3);
+				.style("stroke-width", 3)
+				.on("mouseover", function(){
+					var index = d3.select(this).attr("key");
+					if(index > 0){
+						div.transition()
+						.duration(100)
+						.style("opacity", 1);
+						console.log(newSetList);
+						console.log(index);
+						div.html("Organization: " + newSetList[index-1].name)
+							.style("left", (d3.event.pageX) + "px")
+							.style("top", (d3.event.pageY) + "px");
+					}				
+				})
+				.on("mouseout", function(){
+					div.transition()
+						.duration(100)
+						.style("opacity", 0);
+				});
 
-			svgContainer.append("text")
-				.attr("class", "setext")
-				.attr("x", dic[key][set][0]+dic[key][set][2]-10)
-				.attr("y", dic[key][set][1]+dic[key][set][3]-2)
-				.attr("font-family", "Verdana")
-				.style("font-size", "12px")
-				.style("text-anchor", "middle")
-				.text(dic[key][set][4]);
-
+				svgContainer.append("text")
+					.attr("class", "setext")
+					.attr("x", dic[key][set][0]+dic[key][set][2]-10)
+					.attr("y", dic[key][set][1]+dic[key][set][3]-2)
+					.attr("font-family", "Verdana")
+					.style("font-size", "12px")
+					.style("text-anchor", "middle")
+					.text(dic[key][set][4]);
 		} else {
 			// fillRoundedRectEle(dic[key][set][0], dic[key][set][1], dic[key][set][2], dic[key][set][3], 10, key, dic[key][set][4]);
 			var group = svgContainer.append("g")
